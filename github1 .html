@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Website</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar {
+            background-color: #ff69b4;
+        }
+        .navbar-brand, .nav-link {
+            color: white !important;
+        }
+        .jumbotron {
+            background-color: hsl(253, 100%, 78%); /* Light cyan background */
+            color: #ffee58; /* Orange red text */
+        }
+        .btn-primary {
+            background-color: #ff4500; /* Orange red button */
+            border-color: #ff4500;
+        }
+        .chatbox {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fffacd; /* Lemon chiffon background */
+        }
+        .chatbox-header {
+            background-color: hsl(210, 100%, 68%); /* Dodger blue background */
+            padding: 10px;
+            color: white;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .chatbox-body {
+            padding: 10px;
+            background-color: #fff; /* White background */
+        }
+        .chatbox-footer {
+            display: flex;
+            padding: 10px;
+            background-color: #f0f8ff; /* Alice blue background */
+        }
+        .chatbox-footer input {
+            flex: 1;
+            padding: 5px;
+            border: 1px solid #1e90ff; /* Dodger blue border */
+        }
+        .chatbox-footer button {
+            background-color: #1e90ff; /* Dodger blue button */
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            margin-left: 5px;
+        }
+        .message {
+            margin-bottom: 10px;
+        }
+        .message.user {
+            color: #9400d3; /* Dark violet text */
+        }
+        .message.bot {
+            color: #8a2be2; /* Blue violet text */
+        }
+        .chat-toggle-button {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            line-height: 50px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-collapse {
+                background-color: #ff69b4;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="github1.html">ShopEasy</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="github1.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="products.html">Shop</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact_us.html">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="cart.html">Cart</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-5">
+        <div class="jumbotron text-center">
+            <h1 class="display-4">Welcome to ShopEasy</h1>
+            <p class="lead">Your one-stop shop for all your needs.</p>
+            <hr class="my-4">
+            <p>Explore our collection of amazing products at unbeatable prices.</p>
+            <a class="btn btn-primary btn-lg" href="products.html" role="button">Start Shopping</a>
+        </div>
+        
+        <h4><b>
+            <p>•"Welcome to ShopEasy, your ultimate shopping destination! Dive into our vast collection and discover the best deals just for you!"</p>
+            <p>•Whether you're looking for the latest trends or everyday essentials, we have everything you need at unbeatable prices."</p>
+            <p>•Your journey to a world of amazing products and fabulous deals begins here. Start exploring!"</p>
+        </b></h4>
+
+        <!-- Chatbot -->
+        <div id="chatbot" class="chatbox">
+            <div class="chatbox-header">
+                Chat with us!
+                <button id="closeChat" style="float:right;font-size: small; background: none; border: none; color: white;">&times;</button>
+            </div>
+            <div class="chatbox-body" id="chatboxBody">
+                <div class="message bot">Hello! How can I assist you today?</div>
+            </div>
+            <div class="chatbox-footer">
+                <input type="text" id="userInput" placeholder="Type a message...">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+        <button onclick="toggleChat()" class="chat-toggle-button">Chat</button>
+
+        <!-- Bootstrap JS and dependencies -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script>
+            function toggleChat() {
+                var chatbox = document.getElementById('chatbot');
+                if (chatbox.style.display === 'none' || chatbox.style.display === '') {
+                    chatbox.style.display = 'block';
+                } else {
+                    chatbox.style.display = 'none';
+                }
+            }
+
+            function sendMessage() {
+    var userInput = document.getElementById('userInput').value.toLowerCase();
+    var chatboxBody = document.getElementById('chatboxBody');
+    var response = "";
+
+    if (userInput.includes("code") && userInput.includes("website")) {
+        // Get a random code structure from the array
+        var randomIndex = getRandomCodeStructureIndex();
+        response = websiteCodeStructures[randomIndex];
+    
+    } else if (userInput.includes("product")) {
+        if (productCount < 3) {
+            response = "Sure! Here are some amazing products for you: [Product 1], [Product 2], [Product 3]";
+            productCount++;
+        } else {
+            response = "Isn't that enough? Please guide me on what else you need.";
+        }
+
+    } else if (userInput.includes("chips") || userInput.includes("lays") || userInput.includes("biscuit") || userInput.includes("icecream") || userInput.includes("toy") || userInput.includes("shirt") || userInput.includes("joggers")) {
+   
+        response = "Anything else?";
+    } else if (userInput.includes("i want")) {
+        if (userInput.match(/\d+/)) {
+            var quantity = parseInt(userInput.match(/\d+/)[0]);
+            if (quantity > 1200) {
+                response = "Mam/sir, isn't it enough?";
+} else if (userInput.includes("chips") || userInput.includes("kitty") || userInput.includes("ok") || userInput.includes("respone") || userInput.includes("toy") || userInput.includes("shirt") || userInput.includes("joggers")) {
+response = "thanks mam/sir";
+            } else {
+                response = "Ok sir/madam.";
+            }
+        } else {
+            response = "ok.";
+        }
+    } else {
+        response = "Can you provide  more details.";
+    }
+    var userMessage = document.createElement('div');
+    userMessage.className = 'message user';
+    userMessage.innerText = userInput;
+    chatboxBody.appendChild(userMessage);
+
+    var botMessage = document.createElement('div');
+    botMessage.className = 'message bot';
+    botMessage.innerText = response;
+    chatboxBody.appendChild(botMessage);
+
+    document.getElementById('userInput').value = '';
+    chatboxBody.scrollTop = chatboxBody.scrollHeight;
+}
+
+        </script>
+    </body>
+</html>
